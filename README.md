@@ -1,2 +1,2 @@
-# Virtual-Auctioneer
-Practice project
+# Auction For ZSU
+Kursova project
