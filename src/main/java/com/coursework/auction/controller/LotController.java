@@ -1,9 +1,9 @@
-package com.eleks.auctioneer.controller;
+package com.coursework.auction.controller;
 
-import com.eleks.auctioneer.DTO.LotDTO;
-import com.eleks.auctioneer.entity.AppUser;
-import com.eleks.auctioneer.service.LotService;
-import com.eleks.auctioneer.service.UserService;
+import com.coursework.auction.DTO.LotDTO;
+import com.coursework.auction.entity.AppUser;
+import com.coursework.auction.service.LotService;
+import com.coursework.auction.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;

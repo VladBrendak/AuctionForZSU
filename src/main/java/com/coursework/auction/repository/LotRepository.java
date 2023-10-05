@@ -1,7 +1,6 @@
-package com.eleks.auctioneer.repository;
+package com.coursework.auction.repository;
 
-import com.eleks.auctioneer.entity.AppUser;
-import com.eleks.auctioneer.entity.Lot;
+import com.coursework.auction.entity.Lot;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

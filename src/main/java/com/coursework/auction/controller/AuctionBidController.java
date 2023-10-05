@@ -1,9 +1,9 @@
-package com.eleks.auctioneer.controller;
+package com.coursework.auction.controller;
 
-import com.eleks.auctioneer.DTO.BidDTO;
-import com.eleks.auctioneer.entity.AppUser;
-import com.eleks.auctioneer.service.AuctionBidService;
-import com.eleks.auctioneer.service.UserService;
+import com.coursework.auction.DTO.BidDTO;
+import com.coursework.auction.service.UserService;
+import com.coursework.auction.entity.AppUser;
+import com.coursework.auction.service.AuctionBidService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;

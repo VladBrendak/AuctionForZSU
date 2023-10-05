@@ -1,7 +1,6 @@
-package com.eleks.auctioneer.DTO;
+package com.coursework.auction.DTO;
 
-import com.eleks.auctioneer.entity.Bid;
-import jakarta.validation.constraints.NotEmpty;
+import com.coursework.auction.entity.Bid;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

@@ -1,7 +1,7 @@
-package com.eleks.auctioneer.DTO;
+package com.coursework.auction.DTO;
 
 
-import com.eleks.auctioneer.entity.Lot;
+import com.coursework.auction.entity.Lot;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;

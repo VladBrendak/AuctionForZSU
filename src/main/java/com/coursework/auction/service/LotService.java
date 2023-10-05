@@ -1,10 +1,9 @@
-package com.eleks.auctioneer.service;
+package com.coursework.auction.service;
 
-import com.eleks.auctioneer.DTO.AppUserDTO;
-import com.eleks.auctioneer.DTO.LotDTO;
-import com.eleks.auctioneer.entity.AppUser;
-import com.eleks.auctioneer.entity.Lot;
-import com.eleks.auctioneer.repository.LotRepository;
+import com.coursework.auction.DTO.LotDTO;
+import com.coursework.auction.entity.AppUser;
+import com.coursework.auction.entity.Lot;
+import com.coursework.auction.repository.LotRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;

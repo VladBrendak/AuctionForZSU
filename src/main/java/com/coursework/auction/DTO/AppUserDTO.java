@@ -1,6 +1,6 @@
-package com.eleks.auctioneer.DTO;
+package com.coursework.auction.DTO;
 
-import com.eleks.auctioneer.entity.AppUser;
+import com.coursework.auction.entity.AppUser;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

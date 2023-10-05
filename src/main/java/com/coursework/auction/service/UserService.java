@@ -1,8 +1,8 @@
-package com.eleks.auctioneer.service;
+package com.coursework.auction.service;
 
-import com.eleks.auctioneer.DTO.AppUserDTO;
-import com.eleks.auctioneer.entity.AppUser;
-import com.eleks.auctioneer.repository.UserInfoRepository;
+import com.coursework.auction.DTO.AppUserDTO;
+import com.coursework.auction.entity.AppUser;
+import com.coursework.auction.repository.UserInfoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +12,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service

@@ -1,6 +1,6 @@
-package com.eleks.auctioneer.entity;
+package com.coursework.auction.entity;
 
-import com.eleks.auctioneer.DTO.BidDTO;
+import com.coursework.auction.DTO.BidDTO;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.*;

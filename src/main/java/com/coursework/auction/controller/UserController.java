@@ -1,13 +1,11 @@
-package com.eleks.auctioneer.controller;
+package com.coursework.auction.controller;
 
-import com.eleks.auctioneer.DTO.AppUserDTO;
-import com.eleks.auctioneer.service.UserService;
+import com.coursework.auction.service.UserService;
+import com.coursework.auction.DTO.AppUserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/users")

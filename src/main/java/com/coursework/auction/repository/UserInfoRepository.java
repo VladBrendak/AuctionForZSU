@@ -1,6 +1,6 @@
-package com.eleks.auctioneer.repository;
+package com.coursework.auction.repository;
 
-import com.eleks.auctioneer.entity.AppUser;
+import com.coursework.auction.entity.AppUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

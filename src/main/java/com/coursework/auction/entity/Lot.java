@@ -1,6 +1,6 @@
-package com.eleks.auctioneer.entity;
+package com.coursework.auction.entity;
 
-import com.eleks.auctioneer.DTO.LotDTO;
+import com.coursework.auction.DTO.LotDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
