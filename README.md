@@ -1,2 +1,2 @@
 # Auction For ZSU
-Kursova project
+course work project
