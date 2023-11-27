@@ -1,13 +1,19 @@
 package com.coursework.auction.controller;
 
 import com.coursework.auction.DTO.LotDTO;
+import com.coursework.auction.DTO.LotDTOPreviewResponse;
+import com.coursework.auction.DTO.LotDTOResponse;
 import com.coursework.auction.entity.AppUser;
+import com.coursework.auction.entity.Lot;
 import com.coursework.auction.service.LotService;
 import com.coursework.auction.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +22,7 @@ import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBo
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.AccessDeniedException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -23,6 +30,8 @@ import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
+
+
 
 @RestController
 @RequestMapping("/lots")
@@ -38,20 +47,85 @@ public class LotController {
 
     @PostMapping
     public ResponseEntity<String> uploadLot(@RequestParam ("model") String model,
-                                            @RequestParam("file") MultipartFile file,
                                             @RequestParam("previewImage") MultipartFile previewImage,
+                                            @RequestParam("images") List<MultipartFile> images,
                                             Principal principal) throws IOException {
 
         String currentUserEmail = principal.getName();
         AppUser appUser = userService.getUserByEmail(currentUserEmail);
         var lotDTO = objectMapper.readValue(model, LotDTO.class);
-        return lotService.uploadLot(lotDTO, file, previewImage, appUser);
+        return lotService.uploadLot(lotDTO, previewImage, images, appUser);
     }
 
+//    @GetMapping("/active")
+//    public List<LotDTOResponse> getActiveLots()
+//    {
+//        return lotService.getAllActiveLots();
+//    }
+
+//    @GetMapping("/activePreview")
+//    public List<LotDTOPreviewResponse> getActiveLotsPreview()
+//    {
+//        return lotService.getAllActiveLotsPreview();
+//    }
+
+//    @GetMapping("/category/{categoryId}")
+//    public List<LotDTOPreviewResponse> getLotsByCategory(@PathVariable("categoryId") Long categoryId)
+//    {
+//        return lotService.getLotsByCategoryName(categoryId);
+//    }
+
+//    @GetMapping("/search/{lotName}")
+//    public List<LotDTOPreviewResponse> searchLotsByName(@PathVariable("lotName") String lotName)
+//    {
+//        return lotService.searchLotsByName(lotName);
+//    }
+
     @GetMapping("/active")
-    public List<LotDTO> getActiveLots()
+    public ResponseEntity<Page<LotDTOResponse>> getActiveLots(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        Page<LotDTOResponse> lotsPreview = lotService.getAllActiveLots(page, size);
+        return ResponseEntity.ok(lotsPreview);
+    }
+
+    @GetMapping("/activePreview")
+    public ResponseEntity<Page<LotDTOPreviewResponse>> getActiveLotsPreview(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        Page<LotDTOPreviewResponse> lotsPreview = lotService.getAllActiveLotsPreview(page, size);
+        return ResponseEntity.ok(lotsPreview);
+    }
+
+    @GetMapping("/category/{categoryId}")
+    public ResponseEntity<Page<LotDTOPreviewResponse>> getLotsByCategory(
+            @PathVariable("categoryId") Long categoryId,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        Page<LotDTOPreviewResponse> lotsPreview = lotService.getLotsByCategoryName(categoryId, page, size);
+        return ResponseEntity.ok(lotsPreview);
+    }
+
+    @GetMapping("/search/{lotName}")
+    public ResponseEntity<Page<LotDTOPreviewResponse>> searchLotsByName(
+            @PathVariable("lotName") String lotName,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size)
     {
-        return lotService.getAllActiveLots();
+        Page<LotDTOPreviewResponse> lotsPreview =lotService.searchLotsByName(lotName, page, size);
+        return ResponseEntity.ok(lotsPreview);
+    }
+
+    @GetMapping("lot/{lotName}")
+    public LotDTOResponse getLot(@PathVariable("lotName") String lotName)
+    {
+        return lotService.getLot(lotName);
+    }
+
+    @GetMapping("/user/{userId}")
+    public List<LotDTOPreviewResponse> getUserLots(@PathVariable("userId") Long userId)
+    {
+        return lotService.getAllUserLots(userId);
     }
 
     @RequestMapping(value = "/files/{fileReference}", method = RequestMethod.GET)
@@ -92,6 +166,10 @@ public class LotController {
             }
 
             return ResponseEntity.notFound().build();
+        } catch (AccessDeniedException ade) {
+            ade.printStackTrace();
+            System.out.println(ade.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         } catch (IOException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }

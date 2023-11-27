@@ -1,6 +1,7 @@
 package com.coursework.auction.entity;
 
 import com.coursework.auction.DTO.BidDTO;
+import com.coursework.auction.DTO.BidDTOResponse;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.*;
@@ -39,5 +40,14 @@ public class Bid {
         bidDTO.setDatetime(bid.getDatetime());
 
         return bidDTO;
+    }
+
+    public static BidDTOResponse mapToBidDTOResponse(Bid bid){
+        BidDTOResponse bidDTOResponse = new BidDTOResponse();
+        bidDTOResponse.setUserName(bid.getUser().getThisUsername());
+        bidDTOResponse.setBid(bid.getBid());
+        bidDTOResponse.setDatetime(bid.getDatetime());
+
+        return bidDTOResponse;
     }
 }

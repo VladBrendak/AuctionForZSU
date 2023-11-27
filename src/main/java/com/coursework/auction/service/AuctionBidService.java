@@ -1,6 +1,8 @@
 package com.coursework.auction.service;
 
 import com.coursework.auction.DTO.BidDTO;
+import com.coursework.auction.DTO.BidDTOResponse;
+import com.coursework.auction.DTO.UserBidDTO;
 import com.coursework.auction.entity.AppUser;
 import com.coursework.auction.entity.Bid;
 import com.coursework.auction.entity.Lot;
@@ -12,7 +14,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class AuctionBidService {
@@ -49,7 +54,26 @@ public class AuctionBidService {
             Lot lot = lotOptional.get();
             return lot.getExpiration();
         }
-
         return null;
+    }
+
+    public List<BidDTOResponse> getBids(String lotName){
+        return auctionBidRepository.findTop10ByLotIdOrderByBidDesc(lotRepository.getIdByLotName(lotName))
+                .stream()
+                .map(Bid::mapToBidDTOResponse)
+                .collect(Collectors.toList());
+    }
+
+    public List<UserBidDTO> getUserBids(Long userId) {
+        List<Bid> bids = auctionBidRepository.findDistinctMaxBidByLotIdForUser(userId);
+        List<UserBidDTO> userBids = new ArrayList<>();
+        for(Bid b: bids) {
+            UserBidDTO userBid = new UserBidDTO();
+            userBid.setBid(b.getBid());
+            userBid.setDatetime(b.getDatetime());
+            userBid.setLotName(lotRepository.findLotNameById(b.getLotId()));
+            userBids.add(userBid);
+        }
+        return userBids;
     }
 }

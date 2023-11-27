@@ -1,6 +1,7 @@
 package com.coursework.auction.service;
 
 import com.coursework.auction.DTO.AppUserDTO;
+import com.coursework.auction.DTO.AppUserInfoDTO;
 import com.coursework.auction.entity.AppUser;
 import com.coursework.auction.repository.UserInfoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,5 +42,11 @@ public class UserService implements UserDetailsService {
     {
         Optional<AppUser> optionalUser = userInfoRepository.findByEmail(email);
         return optionalUser.orElse(new AppUser());
+    }
+
+    public void acceptTermsOfUse(AppUser user)
+    {
+        user.setTermsOfUseAccepted(true);
+        userInfoRepository.save(user);
     }
 }

@@ -1,6 +1,9 @@
 spring:
   jpa:
-    show-sql: true
+#    show-sql: true
+#    hibernate: # delete this section in future
+#      ddl-auto: create-drop
+
   datasource:
     platform: postgres
     username: ${DB_USERNAME}
@@ -18,3 +21,8 @@ auctioneer:
     storage:
       image-path: ${IMAGE_PATH}
       file-path:  ${FILE_PATH}
+
+#debug: true
+#logging:
+#  level:
+#    org.springframework.security: DEBUG

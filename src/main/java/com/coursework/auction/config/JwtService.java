@@ -15,7 +15,7 @@ package com.coursework.auction.config;//package com.coursework.auction.config;
 //import java.util.function.Function;
 //
 //@Service
-//public class JwtServise {
+//public class JwtService {
 //
 //    private static final String SECRET_KEY = "634E42354672693468395A4631345F5A384638583134634839465A315A5A5A465A315A5A5A1345F5";
 //
@@ -76,6 +76,8 @@ package com.coursework.auction.config;//package com.coursework.auction.config;
 //
 //}
 
+import com.coursework.auction.repository.UserInfoRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import io.jsonwebtoken.*;
@@ -90,6 +92,8 @@ import java.util.function.Function;
 @Service
 public class JwtService {
     private static final String SECRET_KEY = "518A85727D3E1E78FCC5C84D3FF676AAB88C7441A0B1DBBAC300C82CEA79E8F0";
+    @Autowired
+    private UserInfoRepository userInfoRepository;
 
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
@@ -110,7 +114,7 @@ public class JwtService {
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24))
-                .signWith(getSignInKey(), SignatureAlgorithm.HS512)  // Use HS512 for 512-bit key
+                .signWith(getSignInKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
 
@@ -119,7 +123,7 @@ public class JwtService {
         return (username.equals(userDetails.getUsername())) && !isTokenExpired(token);
     }
 
-    private boolean isTokenExpired(String token) {
+    public boolean isTokenExpired(String token) {
         return extractExpiration(token).before(new Date());
     }
 
@@ -150,5 +154,6 @@ public class JwtService {
         }
         return data;
     }
+
 }
 

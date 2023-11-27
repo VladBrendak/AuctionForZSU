@@ -1,2 +1,6 @@
-package com.coursework.auction.enums;public enum Role {
+package com.coursework.auction.enums;
+
+public enum Role {
+    USER,
+    ADMIN
 }

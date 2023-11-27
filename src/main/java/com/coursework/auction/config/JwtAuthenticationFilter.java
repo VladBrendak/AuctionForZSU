@@ -18,8 +18,8 @@ import java.io.IOException;
 
 @Component
 @RequiredArgsConstructor
-public class JwtAuthentificationFilter extends OncePerRequestFilter{
-    private final JwtServise jwtServise;
+public class JwtAuthenticationFilter extends OncePerRequestFilter{
+    private final JwtService jwtService;
     private final UserDetailsService userDetailsService;
     @Override
     protected void doFilterInternal(
@@ -27,7 +27,7 @@ public class JwtAuthentificationFilter extends OncePerRequestFilter{
             @NonNull HttpServletResponse response,
             @NonNull FilterChain filterChain
     ) throws ServletException, IOException {
-        final String authHeader = request.getHeader("Authorisation");
+        final String authHeader = request.getHeader("Authorization");
         final String jwt;
         final String userEmail;
         if(authHeader == null || !authHeader.startsWith("Bearer ")){
@@ -35,10 +35,10 @@ public class JwtAuthentificationFilter extends OncePerRequestFilter{
             return;
         }
         jwt = authHeader.substring(7);
-        userEmail = jwtServise.extractUsername(jwt);
+        userEmail = jwtService.extractUsername(jwt);
         if(userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
-            if(jwtServise.isTokenValid(jwt, userDetails)) {
+            if(jwtService.isTokenValid(jwt, userDetails)) {
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                         userDetails,
                         null,
